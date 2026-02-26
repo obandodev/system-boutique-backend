@@ -1,21 +1,3 @@
-/// Levantar backend
-# Crear entorno virtual
-python -m -venv venv 
-# Instalar las dependencias
-pip install -r requiremets.txt
-# Creacion db en postgresql
-Crear la base de datos en postgres con el nombre "api_rest"
-# Correr el backend
-uvicorn app.main:app --reload
-
-
-/// Migracion de modelos a la base de datos
-# Inicializar alembic
-alembic init migrations(Creara el directorio migrations)
-
-# Congiracion .env de migrations
-El archivo .env migrations pegar este contenido:
-
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
@@ -23,6 +5,7 @@ from app.infrastructure.config import DATABASE_URL
 from app.infrastructure.database import Base
 
 from app.features.users.models.user import User
+from app.features.products.models.product import Product
 
 config = context.config
 
@@ -54,29 +37,3 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
-
-# Crear commit para realizar la migracion
-alembic revision --autogenerate -m "contenido del commit"
-# Ejecucion de la migracion hacia la db
-alembic upgrade head
-
-
-
-
-
-
-
-
-
-
-
-# Documentacion sqlachemy
-https://docs.sqlalchemy.org
-
-# Conceptos basicos: 
-https://docs.sqlalchemy.org/en/20/orm/quickstart.html
-# Definir modelos:
-https://docs.sqlalchemy.org/en/20/orm/mapping_styles.html#orm-declarative-mapping
-# Como funcionan las sesiones:
-https://docs.sqlalchemy.org/en/20/orm/session_basics.html#what-does-the-session-do
-

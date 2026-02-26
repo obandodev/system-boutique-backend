@@ -1,0 +1,22 @@
+# Entorno virtual
+venv/
+
+# Variables de entorno
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDEs
+.vscode/
+.idea/
+
+# Alembic (si tuvieras credenciales directamente)
+# alembic.ini
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
