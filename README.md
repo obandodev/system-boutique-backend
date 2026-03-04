@@ -1,82 +1,47 @@
-/// Levantar backend
+# System Park API
+
+## Variables de entorno
+1. Seleccionar `.env.example` y renombrarlo a `.env`
+2. Completar los valores con tus credenciales
+
+## Levantar backend
+
 # Crear entorno virtual
-python -m -venv venv 
-# Instalar las dependencias
-pip install -r requiremets.txt
-# Creacion db en postgresql
-Crear la base de datos en postgres con el nombre "api_rest"
+python -m venv venv
+
+# Activar entorno virtual
+venv\Scripts\activate        # Windows
+source venv/bin/activate     # Mac/Linux
+
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Crear base de datos en PostgreSQL
+Crear la base de datos en psql o pgAdmin con el nombre "system_park"
+
 # Correr el backend
 uvicorn app.main:app --reload
 
 
-/// Migracion de modelos a la base de datos
-# Inicializar alembic
-alembic init migrations(Creara el directorio migrations)
+## Migración de modelos a la base de datos
 
-# Congiracion .env de migrations
-El archivo .env migrations pegar este contenido:
+# Inicializar alembic (solo la primera vez)
+alembic init migrations
 
-from logging.config import fileConfig
-from sqlalchemy import engine_from_config, pool
-from alembic import context
-from app.infrastructure.config import DATABASE_URL
-from app.infrastructure.database import Base
+# Crear migración
+alembic revision --autogenerate -m "descripción del cambio"
 
-from app.features.users.models.user import User
-
-config = context.config
-
-if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
-
-config.set_main_option("sqlalchemy.url", DATABASE_URL)
-
-target_metadata = Base.metadata
-
-def run_migrations_offline() -> None:
-    url = config.get_main_option("sqlalchemy.url")
-    context.configure(url=url, target_metadata=target_metadata, literal_binds=True)
-    with context.begin_transaction():
-        context.run_migrations()
-
-def run_migrations_online() -> None:
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
-    with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
-        with context.begin_transaction():
-            context.run_migrations()
-
-if context.is_offline_mode():
-    run_migrations_offline()
-else:
-    run_migrations_online()
-
-# Crear commit para realizar la migracion
-alembic revision --autogenerate -m "contenido del commit"
-# Ejecucion de la migracion hacia la db
+# Ejecutar migración
 alembic upgrade head
 
 
+## Scripts iniciales
 
+# Insertar datos iniciales
+Después de migrar, ejecutar en orden los scripts del directorio /sql/
+1. 01_roles.sql
+2. 02_users.sql (No ejecutar este script sin realizar el paso del hash)
 
-
-
-
-
-
-
-
-# Documentacion sqlachemy
-https://docs.sqlalchemy.org
-
-# Conceptos basicos: 
-https://docs.sqlalchemy.org/en/20/orm/quickstart.html
-# Definir modelos:
-https://docs.sqlalchemy.org/en/20/orm/mapping_styles.html#orm-declarative-mapping
-# Como funcionan las sesiones:
-https://docs.sqlalchemy.org/en/20/orm/session_basics.html#what-does-the-session-do
-
+# Generar hash del password admin
+ejecutar python hash.py
+Copiar el resultado y reemplazar en 02_users.sql la password por el valor dado antes de ejecutarlo
