@@ -1,8 +1,8 @@
-"""Creacion de tablas usuarios y roles
+"""Crear modelos
 
-Revision ID: 2fd1cf017e7e
+Revision ID: 6401ab0686b8
 Revises: 
-Create Date: 2026-03-03 20:13:49.985917
+Create Date: 2026-03-10 18:08:07.798006
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '2fd1cf017e7e'
+revision: str = '6401ab0686b8'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -24,6 +24,7 @@ def upgrade() -> None:
     op.create_table('roles',
     sa.Column('id_rol', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('name_rol', sa.String(length=100), nullable=False),
+    sa.Column('state', sa.Enum('Active', 'Inactive', name='state_rol_type'), server_default=sa.text("'Active'"), nullable=False),
     sa.Column('creation_date', sa.DateTime(timezone=True), nullable=False),
     sa.PrimaryKeyConstraint('id_rol'),
     sa.UniqueConstraint('name_rol')
