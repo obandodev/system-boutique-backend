@@ -1,9 +1,30 @@
 from sqlalchemy.orm import Session
 from app.features.users.models.user import User
 
+
 class UserRepository:
     def __init__(self, db : Session):
         self.db = db
     
+    def create(self, name : str, last_name : str, type_document, document : str, username : str, phone : str, email : str, password_hash : str, id_rol : int) -> User:
+        user = User(
+            name=name,
+            last_name=last_name,
+            type_document=type_document,
+            document=document,
+            username=username,
+            phone=phone,
+            email=email,
+            password_hash=password_hash,
+            id_rol=id_rol
+        )
+        self.db.add(user)
+        self.db.commit()
+        self.db.refresh(user)
+        return user
+    
     def get_by_email(self, email: str) -> User:
         return self.db.query(User).filter(User.email == email).first()
+    
+    def get_all_users(self) ->list[User]:
+        return self.db.query(User).all()
