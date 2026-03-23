@@ -1,8 +1,8 @@
-"""Cambio en la clase de RolType
+"""Modelo de proveedores
 
-Revision ID: 7c8e5aa32631
-Revises: 6401ab0686b8
-Create Date: 2026-03-10 19:24:19.783556
+Revision ID: 3dcbb672ec1f
+Revises: 6ab54da2b126
+Create Date: 2026-03-22 22:35:46.197282
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '7c8e5aa32631'
-down_revision: Union[str, Sequence[str], None] = '6401ab0686b8'
+revision: str = '3dcbb672ec1f'
+down_revision: Union[str, Sequence[str], None] = '6ab54da2b126'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

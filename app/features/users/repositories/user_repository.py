@@ -25,6 +25,16 @@ class UserRepository:
     
     def get_by_email(self, email: str) -> User:
         return self.db.query(User).filter(User.email == email).first()
+
+    def get_by_username(self, username : str) -> User:
+        return self.db.query(User).filter(User.username == username).first()
     
     def get_all_users(self) ->list[User]:
         return self.db.query(User).all()
+    
+    def update_state(self, username : str , state)-> User:
+        user = self.get_by_username(username)
+        user.state = state
+        self.db.commit()
+        self.db.refresh(user)
+        return user

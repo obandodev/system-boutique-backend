@@ -10,6 +10,7 @@ from app.infrastructure.database import Base
 # ── Importamos los modelos para que Alembic los detecte ─────────
 from app.features.roles.models.rol import Role
 from app.features.users.models.user import User
+from app.features.providers.models.provider import Provider
 
 # ── Config de Alembic ───────────────────────────────────────────
 config = context.config

@@ -1,8 +1,8 @@
-"""Crear modelos
+"""Creacion de modelos
 
-Revision ID: 6401ab0686b8
+Revision ID: 6ab54da2b126
 Revises: 
-Create Date: 2026-03-10 18:08:07.798006
+Create Date: 2026-03-21 17:53:37.901201
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '6401ab0686b8'
+revision: str = '6ab54da2b126'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None

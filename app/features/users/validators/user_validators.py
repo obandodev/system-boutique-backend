@@ -42,3 +42,10 @@ def validate_role_active(role : Role, id_rol : int): # Solo UserCreate (Admin) -
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"El rol con id '{id_rol}' esta inactivo"
         )
+    
+def validate_username_exists(existing_role, username : str):
+    if not existing_role:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"El username '{username}' no existe"
+        )

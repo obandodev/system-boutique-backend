@@ -14,16 +14,6 @@ class UserCreate(BaseModel): # Esquema para que el admin cree usuarios
     password : str
     id_rol : int
 
-class UserRegister(BaseModel): # Esquema para que se registren los clientes
-    name : str
-    last_name : str
-    type_document : DocumentType
-    document : str
-    username : str
-    phone : str
-    email : EmailStr
-    password : str
-
 class UserResponse(BaseModel):
     id_user : int
     name : str

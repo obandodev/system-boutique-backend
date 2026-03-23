@@ -9,7 +9,7 @@ VALUES (
     'admin',
     '3000000000',
     'admin@obansoft.com',
-    'REEMPLAZAR_CON_HASH_GENERADO',
+    '$2b$12$yF082trrH764MBb/MK0FbO6CehQ0Iwx6nFqIA5YoVW5g6CDmO7rWe',
     'Active',
     NOW(),
     NULL,
