@@ -15,3 +15,6 @@ class ProviderRepository:
         self.db.commit()
         self.db.refresh(provider)
         return provider
+    
+    def get_all_providers(self) ->list[Provider]:
+        return self.db.query(Provider).all()

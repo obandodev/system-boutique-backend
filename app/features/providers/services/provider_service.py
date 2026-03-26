@@ -16,3 +16,6 @@ class ProviderService:
             contact_name=data.contact_name,
             phone=data.phone
         )
+    
+    def get_all_providers(self) -> list[Provider]:
+        return self.provider_repository.get_all_providers()
