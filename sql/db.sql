@@ -3,7 +3,7 @@ CREATE TYPE document_type_enum AS ENUM ('TI', 'CC');
 CREATE TYPE state_user_type_enum AS ENUM ('Active', 'Inactive');
 CREATE TYPE state_provider_type_enum AS ENUM ('Active', 'Inactive');
 CREATE TYPE state_category_type_enum AS ENUM ('Active', 'Inactive');
-CREATE TYPE state_product_type_enum AS ENUM ('Active', 'Inactive');
+CREATE TYPE state_product_type_enum AS ENUM ('Active', 'Inactive'); ---En proceso de revision
 CREATE TYPE payment_method_enum AS ENUM ('Efectivo', 'Nequi', 'Daviplata');
 CREATE TYPE inventory_movement_enum AS ENUM ('IN', 'OUT');
 CREATE TYPE cash_state_enum AS ENUM ('Open', 'Closed');
@@ -56,7 +56,7 @@ CREATE TABLE products (
     size VARCHAR(50),
     color VARCHAR(50),
     stock INTEGER NOT NULL DEFAULT 0,
-    state state_product_type_enum NOT NULL DEFAULT 'Active',
+    state state_product_type_enum NOT NULL DEFAULT 'Active', ---Proceso de revision
     creation_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     id_category INTEGER NOT NULL REFERENCES categories(id_category),
     id_provider INTEGER NOT NULL REFERENCES providers(id_provider)

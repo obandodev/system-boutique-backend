@@ -7,11 +7,6 @@ import os
 # Hash de contraseña
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-#Configuracion JWT
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM", "HS256")
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES" , 60))
-
 # Funcion para verificar contraseña
 def verify_password(plain_password : str, hashed_password : str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
@@ -19,6 +14,11 @@ def verify_password(plain_password : str, hashed_password : str) -> bool:
 # Funcion para hasehar contraseña
 def hashed_password(password: str) -> str:
     return pwd_context.hash(password)
+
+#Configuracion JWT
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES" , 60))
 
 # Funcion para generar el token JWt
 def create_access_token(data: dict) -> str:

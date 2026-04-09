@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional
 from app.features.providers.models.provider import StateProviderType
 
 class ProviderCreate(BaseModel):
@@ -14,3 +15,8 @@ class ProviderResponse(BaseModel):
     phone : str
     state : StateProviderType
     creation_date : datetime
+
+class ProviderUpdate(BaseModel):
+    name : Optional[str] = None
+    contact_name : Optional[str] = None
+    phone : Optional[str] = None

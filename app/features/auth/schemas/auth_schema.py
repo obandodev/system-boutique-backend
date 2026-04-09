@@ -1,7 +1,7 @@
-from pydantic import EmailStr, BaseModel
+from pydantic import BaseModel
 
 class LoginRequest(BaseModel): # Datos enviados para el inicio de sesion
-    email : EmailStr
+    document : str
     password : str
 
 class TokenResponse(BaseModel): # Respuesta inicio-sesion

@@ -1,9 +1,10 @@
+from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from app.features.users.models.user import User
-from app.features.users.schemas.user_schema import UserCreate
+from app.features.users.schemas.user_schema import UserCreate, UserUpdate
 from app.features.users.repositories.user_repository import UserRepository
 from app.features.users.models.user import StateUserType
-from app.features.users.validators.user_validators import (validate_email_not_exists, validate_document_not_exists, validate_username_not_exists, validate_role_exists, validate_role_active, validate_username_exists)
+from app.features.users.validators.user_validators import (validate_email_not_exists, validate_document_not_exists, validate_username_not_exists, validate_role_exists, validate_role_active, validate_username_exists, validate_email_not_exists_for_update, validate_phone_not_exists_for_update, validate_username_not_exists_for_update)
 from app.shared.security import hashed_password
 
 class UserService:
@@ -11,7 +12,7 @@ class UserService:
         self.db = db
         self.user_repository = UserRepository(db)
     
-    def create_user(self, data: UserCreate) -> User: # Registros hechos por el Admin
+    def create_user(self, data: UserCreate) -> User: 
         validate_email_not_exists(self.db, data.email)
         validate_document_not_exists(self.db, data.document)
         validate_username_not_exists(self.db, data.username)
@@ -29,9 +30,26 @@ class UserService:
             id_rol=data.id_rol
         )
     
-    def get_user_by_username(self, username: str) -> User:
-        user = self.user_repository.get_by_username(username)
-        validate_username_exists(user, username)
+    def update_user_info(self, document: str, data: UserUpdate, current_user: dict) -> User:
+        user = self.user_repository.get_by_document(document)
+        validate_username_exists(user, document)
+        if current_user.get("role") != "Admin":
+            if current_user.get("sub") != user.document:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Acceso denegado, no tienes los permisos suficientes"
+                )
+        if data.username is not None:
+            validate_username_not_exists_for_update(self.db, data.username, user.id_user)
+        if data.email is not None:
+            validate_email_not_exists_for_update(self.db, data.email, user.id_user)
+        if data.phone is not None:
+            validate_phone_not_exists_for_update(self.db, data.phone, user.id_user)
+        return self.user_repository.update(user, data)
+    
+    def get_user_by_document(self, document: str) -> User:
+        user = self.user_repository.get_by_document(document)
+        validate_username_exists(user, document)
         return user
 
     def get_all_users(self) ->list[User]:

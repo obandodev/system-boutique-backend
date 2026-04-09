@@ -23,6 +23,24 @@ class UserRepository:
         self.db.refresh(user)
         return user
     
+    def update(self, user, data) -> User:
+        if data.name is not None:
+            user.name = data.name
+        if data.last_name is not None:
+            user.last_name = data.last_name
+        if data.username is not None:
+            user.username = data.username
+        if data.phone is not None:
+            user.phone = data.phone
+        if data.email is not None:
+            user.email = data.email
+        self.db.commit()
+        self.db.refresh(user)
+        return user
+    
+    def get_by_document(self, document : str) ->User:
+        return self.db.query(User).filter(User.document == document).first()
+
     def get_by_email(self, email: str) -> User:
         return self.db.query(User).filter(User.email == email).first()
 

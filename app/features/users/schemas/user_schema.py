@@ -3,7 +3,7 @@ from datetime import datetime
 from app.features.users.models.user import StateUserType, DocumentType
 from typing import Optional
 
-class UserCreate(BaseModel): # Esquema para que el admin cree usuarios
+class UserCreate(BaseModel):
     name : str
     last_name : str
     type_document : DocumentType
@@ -27,3 +27,10 @@ class UserResponse(BaseModel):
     creation_date : datetime
     last_access: Optional[datetime]
     id_rol : int
+
+class UserUpdate(BaseModel):
+    name : Optional[str] = None
+    last_name : Optional[str] = None
+    username : Optional[str] = None
+    phone : Optional[str] = None
+    email : Optional[EmailStr] = None

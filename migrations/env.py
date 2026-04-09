@@ -11,6 +11,7 @@ from app.infrastructure.database import Base
 from app.features.roles.models.rol import Role
 from app.features.users.models.user import User
 from app.features.providers.models.provider import Provider
+from app.features.categories.models.category import Category
 
 # ── Config de Alembic ───────────────────────────────────────────
 config = context.config

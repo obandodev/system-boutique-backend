@@ -9,15 +9,15 @@ class AuthService:
         self.db = db
         self.user_repository = UserRepository(db)
 
-    def login(self, email:str, password:str) -> dict:
-        user = self.user_repository.get_by_email(email)
+    def login(self, document:str, password:str) -> dict:
+        user = self.user_repository.get_by_document(document)
 
         validate_user_exists(user)
         validate_password(password, user.password_hash)
         validate_user_active(user)
         
         token = create_access_token({
-            "sub" : user.email,
+            "sub" : user.document,
             "role" : user.role.name_rol,
             "user_id" : user.id_user
         })

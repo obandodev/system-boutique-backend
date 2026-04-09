@@ -7,7 +7,7 @@ from app.shared.dependencies import require_role
 
 router = APIRouter()
 
-@router.get("/{username}", response_model=UserResponse)
-def get_user_by_username(username: str, db: Session = Depends(get_db), current_user: dict = Depends(require_role("Admin"))):
+@router.get("/{document}", response_model=UserResponse)
+def get_user_by_username(document: str, db: Session = Depends(get_db), current_user: dict = Depends(require_role("Admin"))):
     service = UserService(db)
-    return service.get_user_by_username(username)
+    return service.get_user_by_document(document)
